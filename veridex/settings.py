@@ -84,12 +84,15 @@ ASGI_APPLICATION = "veridex.asgi.application"
 # dj-database-url wires up Postgres automatically. Vercel's filesystem is
 # read-only + ephemeral, so SQLite cannot be used there — DATABASE_URL is
 # required in production.
+# Accept either a generic DATABASE_URL (Neon/Supabase) or Vercel Postgres's
+# POSTGRES_URL. Falls back to local SQLite when neither is set.
+_DB_URL = os.environ.get("DATABASE_URL") or os.environ.get("POSTGRES_URL")
 DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+    "default": dj_database_url.parse(
+        _DB_URL or f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
         conn_health_checks=True,
-        ssl_require=not DEBUG and bool(os.environ.get("DATABASE_URL")),
+        ssl_require=bool(_DB_URL) and not DEBUG,
     )
 }
 
