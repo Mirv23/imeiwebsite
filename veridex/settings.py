@@ -115,8 +115,10 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# WhiteNoise: compress + far-future cache headers, no hashed manifest (so it
-# stays safe in serverless where staticfiles.json may not ship with the lambda).
+# WhiteNoise serves static straight from the finders (the bundled `static/`
+# dir), so it works in serverless without a collectstatic/CDN step.
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_AUTOREFRESH = DEBUG
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {
