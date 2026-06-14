@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static veridex_tags %}
+{% block title %}Verify an IMEI — {{ BRAND.name }}{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top:var(--s-10);padding-bottom:var(--s-24)">
+  <div class="container" style="max-width:680px">
+    <div class="section-head" style="margin-bottom:var(--s-6)">
+      <span class="eyebrow">{% icon 'scan' size=16 %} Verify</span>
+      <h2>Run the check.</h2>
+      <p>Pick a check, paste the IMEI, get a plain-language verdict.</p>
+    </div>
+
+    {% for m in messages %}<div class="toast">{{ m }}</div>{% endfor %}
+
+    <!-- Checking overlay -->
+    <div class="checking card">
+      <div class="checking__ring"></div>
+      <strong style="font-family:var(--font-display)">Querying 180+ registries…</strong>
+      <p class="mono" style="font-size:var(--fs-14)">This usually takes under a minute.</p>
+    </div>
+
+    <form method="post" action="{% url 'place_order' %}" data-verify-form>
+      {% csrf_token %}
+      <div data-form-fields>
+        <!-- Step 1: choose service -->
+        <div class="field">
+          <label>1 · Choose a check</label>
+          <div class="svc-pick">
+            {% for s in services %}
+            <label class="svc-option {% if selected and selected.pk == s.pk %}is-selected{% endif %}">
+              <input type="radio" name="service" value="{{ s.pk }}" data-price="{{ s.price }}"
+                     {% if selected and selected.pk == s.pk %}checked{% endif %} required>
+              <span class="svc-option__icon">{% icon s.icon size=20 %}</span>
+              <span class="svc-option__body">
+                <strong>{{ s.name }}</strong>
+                <span>{{ s.delivery_time }} · {{ s.short_description }}</span>
+              </span>
+              <span class="price">{{ BRAND.currency_symbol }}{{ s.price }}</span>
+            </label>
+            {% endfor %}
+          </div>
+          {% if form.service.errors %}<div class="field-error">{{ form.service.errors.0 }}</div>{% endif %}
+        </div>
+
+        <!-- Step 2: IMEI -->
+        <div class="field">
+          <label for="{{ form.imei.id_for_label }}">2 · Enter the IMEI</label>
+          {{ form.imei }}
+          <div class="field-help" id="imei-help">15 digits. Dial <span class="mono">*#06#</span> on the phone to reveal it.</div>
+          {% if form.imei.errors %}<div class="field-error">{% icon 'alert' size=14 %} {{ form.imei.errors.0 }}</div>{% endif %}
+        </div>
+
+        <!-- Step 3: email (optional) -->
+        <div class="field">
+          <label for="{{ form.email.id_for_label }}">3 · Email the result (optional)</label>
+          {{ form.email }}
+          {% if form.email.errors %}<div class="field-error">{{ form.email.errors.0 }}</div>{% endif %}
+        </div>
+
+        <div class="order-summary">
+          <div>
+            <div style="font-size:var(--fs-14);color:var(--text-muted)">Total</div>
+            <div class="total" data-total data-prefix="{{ BRAND.currency_symbol }}">{{ BRAND.currency_symbol }}{% if selected %}{{ selected.price }}{% else %}—{% endif %}</div>
+          </div>
+          <span class="pill pill--ok">{% icon 'lock' size=14 %} Secure check</span>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg btn--block">{% icon 'shield-check' size=20 %} Run the check</button>
+        <p class="field-help" style="text-align:center;margin-top:var(--s-3)">No account needed. You only pay when a verdict is delivered.</p>
+      </div>
+    </form>
+  </div>
+</section>
+{% endblock %}

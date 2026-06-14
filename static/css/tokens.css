@@ -1,0 +1,71 @@
+/* Veridex design tokens — the brand, in code.
+   Single source of truth for color, type, space, radius, shadow, motion. */
+:root {
+  /* Color — ink scale */
+  --ink:        #0A1124;
+  --ink-2:      #131C33;
+  --ink-3:      #1E2A44;
+  --ink-line:   #2A3A5C;
+
+  /* Color — light surfaces */
+  --paper:      #F6F8FC;
+  --surface:    #FFFFFF;
+  --surface-2:  #EEF2FA;
+
+  /* Brand — signature scan teal + electric blue */
+  --brand:      #10D0BE;
+  --brand-deep: #0BA89E;
+  --brand-soft: #E1FBF7;
+  --electric:   #4F7CFF;
+  --glow:       rgba(16, 208, 190, .35);
+
+  /* Status */
+  --verified:   #1FBF6B;
+  --warning:    #F6A623;
+  --danger:     #FF5470;
+
+  /* Text */
+  --text:        #0A1124;
+  --text-muted:  #48566F;
+  --text-faint:  #75839B;
+  --on-dark:        #FFFFFF;
+  --on-dark-muted:  #A7B3CC;
+
+  /* Signature gradient */
+  --grad: linear-gradient(135deg, var(--brand) 0%, var(--electric) 100%);
+  --grad-soft: linear-gradient(135deg, rgba(16,208,190,.12), rgba(79,124,255,.12));
+
+  /* Type */
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --fs-12: .75rem;  --fs-14: .875rem; --fs-16: 1rem;
+  --fs-18: 1.125rem; --fs-22: 1.375rem; --fs-28: 1.75rem;
+  --fs-36: 2.25rem; --fs-48: 3rem; --fs-64: 4rem;
+
+  /* Space — 4/8 scale */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-8: 32px; --s-10: 40px;
+  --s-12: 48px; --s-16: 64px; --s-20: 80px; --s-24: 96px;
+
+  /* Radius */
+  --r-sm: 10px; --r: 16px; --r-lg: 22px; --r-xl: 28px; --r-pill: 999px;
+
+  /* Shadow — soft, layered */
+  --sh-1: 0 1px 2px rgba(10,17,36,.06), 0 1px 3px rgba(10,17,36,.04);
+  --sh-2: 0 4px 12px rgba(10,17,36,.08), 0 2px 4px rgba(10,17,36,.04);
+  --sh-3: 0 12px 32px rgba(10,17,36,.12), 0 4px 8px rgba(10,17,36,.06);
+  --sh-glow: 0 8px 30px var(--glow);
+
+  /* Motion */
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+  --ease-in: cubic-bezier(.4, 0, 1, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --dur-1: 150ms; --dur-2: 240ms; --dur-3: 360ms;
+
+  /* Layout */
+  --container: 1120px;
+  --nav-h: 64px;
+  --z-nav: 100; --z-overlay: 400; --z-modal: 500;
+}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load veridex_tags %}
+{% block title %}All IMEI checks — {{ BRAND.name }}{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top:var(--s-12)">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">{% icon 'search' size=16 %} Every check</span>
+      <h2>Choose the check that fits the deal.</h2>
+      <p>Each one queries a different set of registries. Stack a few before a high-value purchase.</p>
+    </div>
+
+    {% for category in categories %}
+    <div style="margin-bottom:var(--s-12)">
+      <h3 style="display:flex;align-items:center;gap:var(--s-3);margin-bottom:var(--s-5)">
+        <span class="card__icon" style="margin:0;width:40px;height:40px">{% icon category.icon size=20 %}</span>
+        {{ category.name }}
+        <span style="font-family:var(--font-body);font-weight:400;font-size:var(--fs-14);color:var(--text-faint)">— {{ category.tagline }}</span>
+      </h3>
+      <div class="grid grid--3">
+        {% for s in category.services.all %}
+          {% if s.is_active %}
+          <a href="{{ s.get_absolute_url }}" class="card card-link reveal" data-delay="{{ forloop.counter0|add:1 }}">
+            <span class="card__icon">{% icon s.icon size=24 %}</span>
+            <h3>{{ s.name }}</h3>
+            <p>{{ s.short_description }}</p>
+            <div class="card__row">
+              <span class="price">{{ BRAND.currency_symbol }}{{ s.price }}</span>
+              <span class="pill pill--brand">{% icon 'clock' size=14 %} {{ s.delivery_time }}</span>
+            </div>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
