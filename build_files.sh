@@ -4,7 +4,8 @@
 # Requires DATABASE_URL to be set in the Vercel project env (build + runtime).
 set -e
 
-python3 -m pip install -r requirements.txt
+# Vercel's build image Python is PEP 668 "externally managed"; allow the install.
+python3 -m pip install --break-system-packages -r requirements.txt
 
 # Collect static assets into ./staticfiles (served by Vercel's CDN via routes).
 python3 manage.py collectstatic --noinput --clear
