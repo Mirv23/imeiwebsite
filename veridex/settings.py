@@ -9,22 +9,30 @@ from pathlib import Path
 import os
 
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- Security -------------------------------------------------------------
-# Override these via environment variables in production.
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY",
-    "dev-insecure-change-me-before-deploying-veridex",
-)
-DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
+# DEBUG is OFF by default — a forgotten env var must fail safe, not leak
+# tracebacks/settings. For local dev, set DJANGO_DEBUG=1.
+DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
+
+# SECRET_KEY is required in production. The throwaway dev key is only ever
+# used with DEBUG on; with DEBUG off, a missing key is a hard error so we can
+# never ship a deployment signing with a public, known key.
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = "dev-insecure-change-me-before-deploying-veridex"
+    else:
+        raise ImproperlyConfigured(
+            "DJANGO_SECRET_KEY must be set when DJANGO_DEBUG is off (production)."
+        )
 
 # Hosts: localhost for dev, *.vercel.app for the deployment, plus anything
 # passed in DJANGO_ALLOWED_HOSTS (comma-separated, e.g. a custom domain).
-ALLOWED_HOSTS = [
-    "localhost", "127.0.0.1", "0.0.0.0", ".vercel.app",
-]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".vercel.app"]
 ALLOWED_HOSTS += [h for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",") if h]
 
 # CSRF over HTTPS on Vercel + any custom domain.
@@ -32,6 +40,22 @@ CSRF_TRUSTED_ORIGINS = ["https://*.vercel.app"]
 CSRF_TRUSTED_ORIGINS += [
     o for o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o
 ]
+
+# Production hardening. Gated on `not DEBUG` so local http dev is unaffected.
+# Vercel terminates TLS at the edge and forwards X-Forwarded-Proto, so Django
+# must trust that header to know the request is really HTTPS (otherwise
+# SECURE_SSL_REDIRECT would loop and secure cookies would never be set).
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 31_536_000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = "same-origin"
+    X_FRAME_OPTIONS = "DENY"
 
 # --- Applications ---------------------------------------------------------
 INSTALLED_APPS = [

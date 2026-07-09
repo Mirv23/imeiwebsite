@@ -14,8 +14,14 @@ from .validators import validate_imei
 
 
 def make_reference() -> str:
-    """Short, human-shareable order reference, e.g. VDX-7F3A9C."""
-    return "VDX-" + secrets.token_hex(3).upper()
+    """Unguessable, human-shareable order reference, e.g. VDX-7F3A9C1D4B2E.
+
+    The result page is reachable by reference alone (no login), so the
+    reference is the only thing standing between a stranger and someone
+    else's lookup. 6 bytes = 48 bits of entropy makes enumeration
+    infeasible. "VDX-" + 12 hex chars = 16 chars, the field's max_length.
+    """
+    return "VDX-" + secrets.token_hex(6).upper()
 
 
 class ServiceCategory(models.Model):
