@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load veridex_tags %}
+{% block title %}Payment not confirmed — {{ BRAND.name }}{% endblock %}
+
+{% block content %}
+<section class="section" style="padding-top:var(--s-12);padding-bottom:var(--s-24)">
+  <div class="container" style="max-width:560px;text-align:center">
+    <span class="card__icon" style="margin:0 auto var(--s-5);width:56px;height:56px">{% icon 'clock' size=26 %}</span>
+    <h2>We haven't confirmed your payment yet.</h2>
+    <p style="margin-top:var(--s-4)">
+      If you just paid, it can take a moment to settle. You can retry the check —
+      once MonCash confirms the payment, your verdict appears right away.
+    </p>
+    <div class="order-summary" style="margin-top:var(--s-8);text-align:left">
+      <div>
+        <div style="font-size:var(--fs-14);color:var(--text-muted)">Reference</div>
+        <div class="mono">{{ order.reference }}</div>
+      </div>
+      <span class="pill">{{ order.service.name }}</span>
+    </div>
+    <div class="grid grid--2" style="margin-top:var(--s-6)">
+      <a href="{% url 'place_order' %}" class="btn btn--primary btn--block">{% icon 'scan' size=18 %} Try again</a>
+      <a href="{% url 'home' %}" class="btn btn--ghost btn--block">Back home</a>
+    </div>
+    <p class="field-help" style="margin-top:var(--s-5)">
+      Kept charging but no result? Email <a href="mailto:{{ BRAND.support_email }}">{{ BRAND.support_email }}</a> with your reference.
+    </p>
+  </div>
+</section>
+{% endblock %}

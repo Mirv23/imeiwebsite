@@ -24,8 +24,14 @@ class CheckResultInline(admin.StackedInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ("reference", "service", "imei", "status", "price_paid", "created_at")
-    list_filter = ("status", "service")
-    search_fields = ("reference", "imei", "email")
-    readonly_fields = ("reference", "created_at", "completed_at")
+    list_display = (
+        "reference", "service", "imei", "payment_status", "status",
+        "price_paid", "created_at",
+    )
+    list_filter = ("payment_status", "status", "service")
+    search_fields = ("reference", "imei", "email", "moncash_transaction_id")
+    readonly_fields = (
+        "reference", "created_at", "completed_at", "paid_at",
+        "moncash_transaction_id", "moncash_payer",
+    )
     inlines = [CheckResultInline]

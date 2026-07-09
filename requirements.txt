@@ -1,5 +1,7 @@
 Django>=5.1,<7.0
 whitenoise>=6.6
 dj-database-url>=2.2
+# HTTP client for the MonCash payment API calls.
+requests>=2.31
 # Postgres driver — used in production (Vercel/Neon/Supabase). Local dev uses SQLite.
 psycopg2-binary>=2.9

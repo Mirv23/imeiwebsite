@@ -170,3 +170,14 @@ VERIDEX = {
     "currency_symbol": "$",
     "support_email": "help@veridex.io",
 }
+
+# --- MonCash payment (Digicel Haiti) --------------------------------------
+# Credentials come from the MonCash business portal; keep them in env only.
+# When client_id/secret are unset, the app runs the free/demo flow (no gate),
+# so the site keeps working until payment is switched on by adding the vars.
+# NOTE: MonCash settles in HTG (gourdes) — price services in HTG accordingly.
+MONCASH = {
+    "client_id": os.environ.get("MONCASH_CLIENT_ID", ""),
+    "client_secret": os.environ.get("MONCASH_CLIENT_SECRET", ""),
+    "mode": os.environ.get("MONCASH_MODE", "sandbox"),  # "sandbox" or "live"
+}

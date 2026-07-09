@@ -79,6 +79,12 @@ class Order(models.Model):
         COMPLETED = "completed", "Completed"
         FAILED = "failed", "Failed"
 
+    class PaymentStatus(models.TextChoices):
+        UNPAID = "unpaid", "Unpaid"
+        AWAITING = "awaiting", "Awaiting payment"  # redirected to MonCash
+        PAID = "paid", "Paid"
+        FAILED = "failed", "Failed"
+
     reference = models.CharField(
         max_length=16, unique=True, default=make_reference, editable=False
     )
@@ -91,6 +97,13 @@ class Order(models.Model):
         max_length=12, choices=Status.choices, default=Status.PENDING
     )
     price_paid = models.DecimalField(max_digits=8, decimal_places=2)
+    # --- Payment (MonCash) ---
+    payment_status = models.CharField(
+        max_length=10, choices=PaymentStatus.choices, default=PaymentStatus.UNPAID
+    )
+    moncash_transaction_id = models.CharField(max_length=64, blank=True)
+    moncash_payer = models.CharField(max_length=32, blank=True)
+    paid_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     completed_at = models.DateTimeField(null=True, blank=True)
 
@@ -102,6 +115,22 @@ class Order(models.Model):
 
     def get_absolute_url(self) -> str:
         return reverse("order_result", args=[self.reference])
+
+    @property
+    def is_paid(self) -> bool:
+        return self.payment_status == self.PaymentStatus.PAID
+
+    def mark_paid(self, transaction_id: str = "", payer: str = "") -> None:
+        self.payment_status = self.PaymentStatus.PAID
+        self.moncash_transaction_id = transaction_id or ""
+        self.moncash_payer = payer or ""
+        self.paid_at = timezone.now()
+        self.save(
+            update_fields=[
+                "payment_status", "moncash_transaction_id",
+                "moncash_payer", "paid_at",
+            ]
+        )
 
     def mark_completed(self) -> None:
         self.status = self.Status.COMPLETED

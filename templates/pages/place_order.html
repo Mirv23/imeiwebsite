@@ -63,11 +63,16 @@
             <div style="font-size:var(--fs-14);color:var(--text-muted)">Total</div>
             <div class="total" data-total data-prefix="{{ BRAND.currency_symbol }}">{{ BRAND.currency_symbol }}{% if selected %}{{ selected.price }}{% else %}—{% endif %}</div>
           </div>
-          <span class="pill pill--ok">{% icon 'lock' size=14 %} Secure check</span>
+          <span class="pill pill--ok">{% icon 'lock' size=14 %} {% if payment_enabled %}MonCash secure payment{% else %}Secure check{% endif %}</span>
         </div>
 
+        {% if payment_enabled %}
+        <button type="submit" class="btn btn--primary btn--lg btn--block">{% icon 'credit-card' size=20 %} Pay with MonCash</button>
+        <p class="field-help" style="text-align:center;margin-top:var(--s-3)">You'll be sent to MonCash to pay securely. The check runs the moment payment is confirmed.</p>
+        {% else %}
         <button type="submit" class="btn btn--primary btn--lg btn--block">{% icon 'shield-check' size=20 %} Run the check</button>
         <p class="field-help" style="text-align:center;margin-top:var(--s-3)">No account needed — just the IMEI.</p>
+        {% endif %}
       </div>
     </form>
   </div>
