@@ -16,3 +16,4 @@ staticfiles/
 
 # Vercel
 .vercel
+.env*
