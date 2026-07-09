@@ -14,12 +14,28 @@
           <a href="{% url 'place_order' %}" class="btn btn--primary btn--lg">Check an IMEI</a>
           <a href="#how" class="btn btn--ghost btn--lg">See how it works</a>
         </div>
-        <div class="statrow">
-          <div class="stat"><div class="stat__num">Registries</div><div class="stat__label">Checks against the registries carriers use</div></div>
-          <div class="stat"><div class="stat__num">Under a minute</div><div class="stat__label">Most results come back quickly</div></div>
-          <div class="stat"><div class="stat__num">Plain words</div><div class="stat__label">A verdict, not a code dump</div></div>
-          <div class="stat"><div class="stat__num">{% if cheapest %}{{ BRAND.currency_symbol }}{{ cheapest|floatformat:2 }}{% else %}$0.99{% endif %}</div><div class="stat__label">From, per check</div></div>
-        </div>
+        <ul class="hero-facts reveal" data-delay="1">
+          <li class="fact">
+            <span class="fact__icon">{% icon 'globe' size=18 %}</span>
+            <span class="fact__title">Registries</span>
+            <span class="fact__text">The same sources carriers use</span>
+          </li>
+          <li class="fact">
+            <span class="fact__icon">{% icon 'zap' size=18 %}</span>
+            <span class="fact__title">Under a minute</span>
+            <span class="fact__text">Most results come back fast</span>
+          </li>
+          <li class="fact">
+            <span class="fact__icon">{% icon 'check-circle' size=18 %}</span>
+            <span class="fact__title">Plain words</span>
+            <span class="fact__text">A verdict, not a code dump</span>
+          </li>
+          <li class="fact fact--price">
+            <span class="fact__icon">{% icon 'credit-card' size=18 %}</span>
+            <span class="fact__title">{% if cheapest %}{{ BRAND.currency_symbol }}{{ cheapest|floatformat:2 }}{% else %}$0.99{% endif %}</span>
+            <span class="fact__text">From, per check</span>
+          </li>
+        </ul>
       </div>
 
       <div class="photo-card reveal">
@@ -56,6 +72,7 @@
       <h2>One number, a few questions worth answering.</h2>
       <p>Run just the check a deal calls for, or a few together before a bigger purchase.</p>
     </div>
+    <span class="swipe-hint">Swipe {% icon 'arrow-right' size=14 %}</span>
     <div class="svc2-grid">
       {% for s in featured %}
         {% if forloop.first %}
@@ -120,6 +137,7 @@
 <section class="section">
   <div class="container">
     <div class="section-head reveal"><span class="section-label">{% icon 'star' size=16 %} In their words</span><h2>What people use it for.</h2></div>
+    <span class="swipe-hint">Swipe {% icon 'arrow-right' size=14 %}</span>
 
     <div class="tmon-grid">
       <div class="tmon reveal" data-delay="1">

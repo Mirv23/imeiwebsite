@@ -359,11 +359,33 @@ p { color: var(--text-muted); }
   .photo-card > img { aspect-ratio: 4/4.3; }
 }
 
-/* ---- Stat row ---- */
-.statrow { display: grid; grid-template-columns: repeat(2,1fr); gap: var(--s-3); margin-top: var(--s-8); }
-@media (min-width: 560px) { .statrow { grid-template-columns: repeat(4,1fr); } }
-.statrow .stat { text-align: left; padding: 0; }
-.statrow .stat__num { font-size: var(--fs-28); }
+/* Hero entrance — a quiet staggered fade-up on load. */
+.hero2 .section-label { animation: floatUp .5s var(--ease-out) both; }
+.hero2 h1            { animation: floatUp .5s var(--ease-out) .06s both; }
+.hero2__lead         { animation: floatUp .5s var(--ease-out) .12s both; }
+.hero2__actions      { animation: floatUp .5s var(--ease-out) .18s both; }
+.photo-card > img { transition: transform .6s var(--ease-out); }
+.photo-card:hover > img { transform: scale(1.03); }
+.float-chip--br { animation: floaty 4.5s ease-in-out infinite; }
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+/* ---- Hero facts (feature strip under the lead) ---- */
+.hero-facts {
+  list-style: none; padding: 0; margin-top: var(--s-10);
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-5) var(--s-6);
+}
+@media (min-width: 620px) { .hero-facts { grid-template-columns: repeat(4, 1fr); } }
+.fact {
+  display: flex; flex-direction: column; gap: 5px;
+  padding-top: var(--s-3); border-top: 1px solid rgba(33, 30, 26, .14);
+}
+.fact__icon { color: var(--brand-deep); margin-bottom: 2px; }
+.fact__title {
+  font-family: var(--font-body); font-weight: 600; font-size: var(--fs-16);
+  color: var(--ink); line-height: 1.2;
+}
+.fact--price .fact__title { font-family: var(--font-display); font-size: var(--fs-22); }
+.fact__text { font-size: var(--fs-13); color: var(--text-muted); line-height: 1.4; }
 
 /* ---- Trust ticker (kept minimal & discreet) ---- */
 .ticker { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
@@ -439,3 +461,50 @@ p { color: var(--text-muted); }
 .tmon__head strong { display: block; color: var(--ink); font-size: var(--fs-14); }
 .tmon__head span { font-size: var(--fs-12); color: var(--text-faint); }
 .stars { color: var(--warning); letter-spacing: 2px; font-size: var(--fs-14); }
+
+/* ======================================================================
+   MOBILE SLIDERS — turn card grids into swipeable, snapping rails on phones.
+   CSS-only (scroll-snap); reverts to the normal grid at ≥640px.
+   ====================================================================== */
+@media (max-width: 639px) {
+  .svc2-grid, .tmon-grid, .bento {
+    display: flex;
+    grid-template-columns: none;      /* drop the grid on mobile */
+    gap: var(--s-4);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;            /* Firefox */
+    /* Bleed to the screen edges so the next card peeks in — editorial feel. */
+    margin-inline: calc(var(--s-5) * -1);
+    padding: var(--s-1) var(--s-5) var(--s-4);
+  }
+  .svc2-grid::-webkit-scrollbar,
+  .tmon-grid::-webkit-scrollbar,
+  .bento::-webkit-scrollbar { display: none; }   /* WebKit */
+
+  .svc2-grid > .svc2,
+  .tmon-grid > .tmon,
+  .bento > .bento-tile {
+    flex: 0 0 84%;
+    scroll-snap-align: center;
+    /* Cards must be visible even while off-screen to the right, so neutralize
+       the scroll-reveal transform inside a horizontal rail. */
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .svc2-grid > .svc2.feature { flex-basis: 90%; min-height: 340px; }
+  .bento > .bento-tile--dark { min-height: 0; }
+}
+
+/* A small "swipe" hint shown only on mobile, above a slider. */
+.swipe-hint { display: none; }
+@media (max-width: 639px) {
+  .swipe-hint {
+    display: inline-flex; align-items: center; gap: var(--s-2);
+    font-family: var(--font-mono); font-size: var(--fs-12); color: var(--text-faint);
+    letter-spacing: .04em; margin-bottom: var(--s-3);
+  }
+  .swipe-hint .icn { animation: nudge 1.8s var(--ease-out) infinite; }
+}
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
