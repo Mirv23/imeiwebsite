@@ -120,6 +120,17 @@ DATABASES = {
     )
 }
 
+# --- Cache ----------------------------------------------------------------
+# Serverless functions don't share memory between invocations, so an in-memory
+# cache can't back a rate limiter. Use a Postgres-backed cache table (created
+# at build time via `manage.py createcachetable`). No extra dependency.
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "veridex_cache",
+    }
+}
+
 # --- Password validation --------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},

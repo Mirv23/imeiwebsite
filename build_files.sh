@@ -12,4 +12,6 @@ python3 manage.py collectstatic --noinput --clear
 
 # Apply schema + seed the service catalog against the production database.
 python3 manage.py migrate --noinput
+# Create the cache table backing the rate limiter (idempotent).
+python3 manage.py createcachetable
 python3 manage.py seed_services

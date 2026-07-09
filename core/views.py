@@ -1,10 +1,33 @@
 from django.contrib import messages
+from django.core.cache import cache
 from django.db.models import Min
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import OrderForm
 from .models import Order, Service, ServiceCategory
 from .services import run_lookup
+
+# Rate limit for the (DB-writing, provider-billable-later) check endpoint.
+_RATE_LIMIT = 20      # allowed submissions per window, per client
+_RATE_WINDOW = 3600   # seconds
+
+
+def _client_ip(request) -> str:
+    """Best-effort client IP behind Vercel's proxy (X-Forwarded-For)."""
+    forwarded = request.META.get("HTTP_X_FORWARDED_FOR", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.META.get("REMOTE_ADDR", "") or "unknown"
+
+
+def _rate_limited(request) -> bool:
+    """Count submissions per client in a rolling window; True if over budget."""
+    key = f"verify-rate:{_client_ip(request)}"
+    count = cache.get(key, 0)
+    if count >= _RATE_LIMIT:
+        return True
+    cache.set(key, count + 1, _RATE_WINDOW)
+    return False
 
 
 def home(request):
@@ -32,12 +55,20 @@ def place_order(request):
     active_services = Service.objects.filter(is_active=True)
 
     if request.method == "POST":
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            order = form.save()
-            run_lookup(order)  # mock today, real provider later
-            return redirect(order.get_absolute_url())
-        messages.error(request, "Please fix the highlighted fields.")
+        if _rate_limited(request):
+            messages.error(
+                request,
+                "Too many checks from your connection in a short time. "
+                "Please wait a little and try again.",
+            )
+            form = OrderForm(request.POST)
+        else:
+            form = OrderForm(request.POST)
+            if form.is_valid():
+                order = form.save()
+                run_lookup(order)  # mock today, real provider later
+                return redirect(order.get_absolute_url())
+            messages.error(request, "Please fix the highlighted fields.")
     else:
         initial = {}
         if preselect:
