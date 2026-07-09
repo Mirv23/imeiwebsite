@@ -9,17 +9,11 @@ from .services import run_lookup
 
 def home(request):
     featured = Service.objects.filter(is_active=True, is_featured=True)[:6]
-    stats = {
-        "checks": "2.4M+",
-        "sources": "180+",
-        "avg_time": "47s",
-        "accuracy": "99.6%",
-    }
     cheapest = Service.objects.filter(is_active=True).aggregate(p=Min("price"))["p"]
     return render(
         request,
         "pages/home.html",
-        {"featured": featured, "stats": stats, "cheapest": cheapest},
+        {"featured": featured, "cheapest": cheapest},
     )
 
 

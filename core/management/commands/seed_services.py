@@ -11,37 +11,37 @@ from django.core.management.base import BaseCommand
 from core.models import Service, ServiceCategory
 
 CATEGORIES = [
-    ("Theft & blacklist", "blacklist", "Is it safe — or stolen?", "shield-check", 1),
-    ("Locks & activation", "locks", "Will it actually turn on for you?", "lock", 2),
-    ("Device & carrier info", "info", "Know exactly what you're buying.", "smartphone", 3),
-    ("Warranty & coverage", "warranty", "Check what's still covered.", "clock", 4),
+    ("Theft & blacklist", "blacklist", "Was it reported lost or stolen?", "shield-check", 1),
+    ("Locks & activation", "locks", "Can you actually set it up?", "lock", 2),
+    ("Device & carrier info", "info", "See what the phone really is.", "smartphone", 3),
+    ("Warranty & coverage", "warranty", "See what's still covered.", "clock", 4),
 ]
 
 SERVICES = [
     # slug, name, category_slug, short, price, delivery, success, icon, featured
     ("blacklist-check", "Blacklist & Stolen Check", "blacklist",
-     "Lost, stolen, or unpaid? Check global blacklists before you pay.",
+     "Check global blacklists for a lost, stolen, or unpaid report before you pay.",
      "1.49", "30 sec – 2 min", 99, "ban", True),
     ("find-my-iphone", "Find My / iCloud Status", "locks",
-     "Is Activation Lock on? Avoid a phone you can never set up.",
+     "See whether Activation Lock is still on before you buy.",
      "1.99", "Instant", 99, "lock", True),
     ("sim-lock-check", "SIM-Lock & Carrier", "locks",
-     "Locked to a network or free to use any SIM? Find out instantly.",
+     "Find out if the phone is tied to a network or open to any SIM.",
      "2.49", "1 – 5 min", 98, "sim", True),
     ("carrier-find", "Original Carrier & Country", "info",
      "See which carrier and country the device was first sold for.",
      "1.99", "1 – 10 min", 98, "globe", True),
     ("model-info", "Full Model & Specs", "info",
-     "Exact model, color, storage and manufacture date from the IMEI.",
+     "Read the model, color, storage, and manufacture date from the IMEI.",
      "0.99", "Instant", 99, "smartphone", True),
     ("mdm-check", "MDM / Organization Lock", "locks",
-     "Detect a corporate MDM lock that bricks the phone after reset.",
+     "Spot a corporate MDM lock that can lock the phone after a reset.",
      "2.99", "2 – 10 min", 97, "fingerprint", False),
     ("warranty-check", "Warranty & Coverage", "warranty",
-     "Warranty status, purchase date and remaining coverage window.",
+     "Look up warranty status, purchase date, and remaining coverage.",
      "1.49", "Instant", 99, "clock", True),
     ("replaced-check", "Replaced / Refurbished Flag", "warranty",
-     "Find out if the device was swapped or refurbished under warranty.",
+     "See whether the device was swapped or refurbished under warranty.",
      "1.29", "1 – 5 min", 98, "info", False),
 ]
 

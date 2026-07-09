@@ -7,51 +7,25 @@
   <div class="container">
     <div class="hero2__grid">
       <div>
-        <span class="section-label">{% icon 'shield-check' size=16 %} Trusted by 2.4M+ phone buyers</span>
-        <h1>Don't buy a <span class="accent">stolen or locked</span> phone by accident.</h1>
-        <p class="hero2__lead">Paste the IMEI. In under a minute, Veridex tells you — in plain words — whether a used phone is clean, blacklisted, or iCloud-locked. <strong style="color:var(--ink)">Before a single dollar leaves your hands.</strong></p>
+        <span class="section-label">{% icon 'shield-check' size=16 %} For anyone buying a used phone</span>
+        <h1>Know a used phone is <span class="accent">clean</span> before you pay for it.</h1>
+        <p class="hero2__lead">Enter the IMEI and Veridex checks it against the registries carriers use, then hands back a plain answer — is it clear, blacklisted, or iCloud-locked? A quiet minute now, before the money changes hands.</p>
         <div class="hero2__actions">
-          <a href="{% url 'place_order' %}" class="btn btn--primary btn--lg">{% icon 'scan' size=20 %} Verify an IMEI</a>
+          <a href="{% url 'place_order' %}" class="btn btn--primary btn--lg">Check an IMEI</a>
           <a href="#how" class="btn btn--ghost btn--lg">See how it works</a>
         </div>
-        <div class="hero2__pills">
-          <span class="pill pill--ok">{% icon 'zap' size=14 %} Results in ~47s</span>
-          <span class="pill pill--brand">{% icon 'lock' size=14 %} 100% private</span>
-          <span class="pill">{% icon 'check-circle' size=14 %} 99.6% accurate</span>
-        </div>
         <div class="statrow">
-          <div class="stat"><div class="stat__num"><span data-count="2.4" data-suffix="M+">2.4M+</span></div><div class="stat__label">IMEIs verified</div></div>
-          <div class="stat"><div class="stat__num"><span data-count="180" data-suffix="+">180+</span></div><div class="stat__label">Data sources</div></div>
-          <div class="stat"><div class="stat__num"><span data-count="47" data-suffix="s">47s</span></div><div class="stat__label">Avg. result</div></div>
+          <div class="stat"><div class="stat__num">Registries</div><div class="stat__label">Checks against the registries carriers use</div></div>
+          <div class="stat"><div class="stat__num">Under a minute</div><div class="stat__label">Most results come back quickly</div></div>
+          <div class="stat"><div class="stat__num">Plain words</div><div class="stat__label">A verdict, not a code dump</div></div>
           <div class="stat"><div class="stat__num">{% if cheapest %}{{ BRAND.currency_symbol }}{{ cheapest|floatformat:2 }}{% else %}$0.99{% endif %}</div><div class="stat__label">From, per check</div></div>
         </div>
       </div>
 
       <div class="photo-card reveal">
-        <div class="scanner__beam"></div>
         <img src="{% static 'img/people/hero-c.jpg' %}" alt="A person holding up a used smartphone to check it before buying">
-        <span class="float-chip float-chip--tl mono" style="font-size:var(--fs-12)">{% icon 'scan' size=16 %} IMEI 35&nbsp;864650…</span>
         <span class="float-chip float-chip--br"><span class="dotg">{% icon 'check' size=18 %}</span> Clean <small>Safe to buy</small></span>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ TRUST TICKER ============ -->
-<section style="padding-block:var(--s-8);border-bottom:1px solid rgba(42,58,92,.07)">
-  <div class="container" style="margin-bottom:var(--s-4)"><p style="text-align:center;font-size:var(--fs-12);text-transform:uppercase;letter-spacing:.14em;color:var(--text-faint);font-family:var(--font-mono)">Checked against the same registries carriers use</p></div>
-  <div class="ticker">
-    <div class="ticker__track">
-      {% for n in "12" %}
-      <span class="ticker__item">{% icon 'smartphone' size=16 %} Apple</span>
-      <span class="ticker__item">{% icon 'smartphone' size=16 %} Samsung</span>
-      <span class="ticker__item">{% icon 'globe' size=16 %} GSMA blacklist</span>
-      <span class="ticker__item">{% icon 'lock' size=16 %} iCloud / Find My</span>
-      <span class="ticker__item">{% icon 'sim' size=16 %} Carrier databases</span>
-      <span class="ticker__item">{% icon 'smartphone' size=16 %} Google Pixel</span>
-      <span class="ticker__item">{% icon 'fingerprint' size=16 %} MDM registries</span>
-      <span class="ticker__item">{% icon 'smartphone' size=16 %} Xiaomi</span>
-      {% endfor %}
     </div>
   </div>
 </section>
@@ -63,13 +37,8 @@
       <div class="panel-dark__grid">
         <div>
           <span class="section-label" style="color:var(--brand)">{% icon 'alert' size=16 %} Why it matters</span>
-          <h2>A cheap phone can cost you <span class="hl">everything</span>.</h2>
-          <p style="margin-top:var(--s-4)">A used phone can hide an <span class="hl">unpaid bill</span>, a <span class="hl">blacklist flag</span>, or an <span class="hl">iCloud lock</span> that turns a $600 device into a paperweight the moment you reset it. The data to catch it already exists — locked inside carrier and registry systems. <span style="color:#fff">Veridex reads it for you and hands back one clear verdict.</span></p>
-          <div style="display:flex;flex-wrap:wrap;gap:var(--s-3);margin-top:var(--s-8)">
-            <span class="pill pill--bad">{% icon 'ban' size=14 %} Stolen &amp; blacklisted</span>
-            <span class="pill pill--warn">{% icon 'lock' size=14 %} iCloud locked</span>
-            <span class="pill" style="background:rgba(255,255,255,.08);color:var(--on-dark-muted)">{% icon 'sim' size=14 %} Carrier-locked</span>
-          </div>
+          <h2>A used phone can carry a history you can't see.</h2>
+          <p style="margin-top:var(--s-4)">A device that looks perfect can still be reported stolen, flagged on a blacklist, or tied to someone else's iCloud account. You often don't find out until you reset it and it won't activate. That information already exists in carrier and registry systems — Veridex looks it up and gives you a single, readable verdict.</p>
         </div>
         <div class="photo-card">
           <img src="{% static 'img/people/hero-a.jpg' %}" alt="Close-up of hands holding a smartphone in low light">
@@ -84,8 +53,8 @@
   <div class="container">
     <div class="section-head reveal">
       <span class="section-label">{% icon 'search' size=16 %} Our checks</span>
-      <h2>One number. Every answer that matters.</h2>
-      <p>Run exactly the check the deal needs — or stack a few before a big purchase.</p>
+      <h2>One number, a few questions worth answering.</h2>
+      <p>Run just the check a deal calls for, or a few together before a bigger purchase.</p>
     </div>
     <div class="svc2-grid">
       {% for s in featured %}
@@ -93,12 +62,12 @@
           <a href="{{ s.get_absolute_url }}" class="svc2 feature reveal">
             <img src="{% static 'img/people/hands-a.jpg' %}" alt="">
             <div class="feature__body">
-              <span class="pill pill--brand" style="margin-bottom:var(--s-3)">{% icon 'star' size=14 %} Most popular</span>
+              <span class="pill pill--brand" style="margin-bottom:var(--s-3)">Popular</span>
               <h3>{{ s.name }}</h3>
               <p>{{ s.short_description }}</p>
               <div class="svc2__row">
                 <span class="price" style="color:#fff">{{ BRAND.currency_symbol }}{{ s.price }}</span>
-                <span class="btn btn--light">{% icon 'arrow-right' size=18 %} Run it</span>
+                <span class="btn btn--light">Run this check {% icon 'arrow-right' size=18 %}</span>
               </div>
             </div>
           </a>
@@ -122,11 +91,11 @@
 <!-- ============ HOW IT WORKS ============ -->
 <section class="section" id="how">
   <div class="container">
-    <div class="section-head reveal"><span class="section-label">{% icon 'zap' size=16 %} How it works</span><h2>Three taps to a clear verdict.</h2></div>
+    <div class="section-head reveal"><span class="section-label">{% icon 'zap' size=16 %} How it works</span><h2>Three steps to a clear verdict.</h2></div>
     <div class="grid grid--3">
-      <div class="step reveal" data-delay="1"><span class="step__num"></span><div><h3>Find the IMEI</h3><p>Dial <span class="mono">*#06#</span> on the phone, or open Settings → About. It's 15 digits.</p></div></div>
-      <div class="step reveal" data-delay="2"><span class="step__num"></span><div><h3>Pick a check</h3><p>Blacklist, iCloud lock, carrier, warranty — choose what the deal needs.</p></div></div>
-      <div class="step reveal" data-delay="3"><span class="step__num"></span><div><h3>Read the verdict</h3><p>We query the registries and hand back a plain answer, not a code dump.</p></div></div>
+      <div class="step reveal" data-delay="1"><span class="step__num"></span><div><h3>Find the IMEI</h3><p>Dial <span class="mono">*#06#</span> on the phone, or open Settings → About. It's the 15-digit number.</p></div></div>
+      <div class="step reveal" data-delay="2"><span class="step__num"></span><div><h3>Pick a check</h3><p>Blacklist, iCloud lock, carrier, warranty — choose whatever the deal calls for.</p></div></div>
+      <div class="step reveal" data-delay="3"><span class="step__num"></span><div><h3>Read the verdict</h3><p>We look up the registries and hand back a plain answer, not a wall of codes.</p></div></div>
     </div>
   </div>
 </section>
@@ -134,21 +103,15 @@
 <!-- ============ BENEFITS BENTO ============ -->
 <section class="section bg-cream" id="trust">
   <div class="container">
-    <div class="section-head reveal"><span class="section-label">{% icon 'shield-check' size=16 %} Why Veridex</span><h2>Built for the 60 seconds before you pay.</h2></div>
+    <div class="section-head reveal"><span class="section-label">{% icon 'shield-check' size=16 %} Why Veridex</span><h2>A few things we care about.</h2></div>
     <div class="bento">
-      <div class="bento-tile bento-tile--dark span2 reveal">
-        <div class="stat__num" style="font-size:var(--fs-48)"><span data-count="47" data-suffix="s">47s</span></div>
-        <h3 style="margin-top:var(--s-2)">Faster than the seller can stall.</h3>
-        <p>Most verdicts land before the conversation moves on. Check mid-deal, decide on the spot.</p>
-      </div>
-      <div class="bento-tile bento-tile--brand reveal" data-delay="1">
+      <div class="bento-tile reveal"><span class="card__icon" style="margin-bottom:var(--s-3)">{% icon 'check-circle' size=22 %}</span><h3>Honest verdicts</h3><p>If a registry is unreachable, we say so plainly — and we don't charge for an answer we couldn't actually give you.</p></div>
+      <div class="bento-tile reveal" data-delay="1"><span class="card__icon" style="margin-bottom:var(--s-3)">{% icon 'lock' size=22 %}</span><h3>Your IMEI stays yours</h3><p>We run the check and move on. No profiles, no tracking, and we never sell your lookups to anyone.</p></div>
+      <div class="bento-tile bento-tile--brand reveal" data-delay="2">
         <div class="stat__num" style="font-size:var(--fs-36);color:var(--ink)">{% if cheapest %}{{ BRAND.currency_symbol }}{{ cheapest|floatformat:2 }}{% else %}$0.99{% endif %}</div>
-        <h3>Cheaper than a coffee.</h3>
-        <p style="color:rgba(10,17,36,.7)">A tiny check beats a phone you can never activate.</p>
+        <h3>A small price to be sure</h3>
+        <p style="color:var(--text-muted)">Checks start low on purpose — it should cost far less than the mistake it helps you avoid.</p>
       </div>
-      <div class="bento-tile--photo reveal" data-delay="2"><img src="{% static 'img/people/hands-a.jpg' %}" alt="Hand holding a phone in sunlight"></div>
-      <div class="bento-tile reveal"><span class="card__icon" style="margin-bottom:var(--s-3)">{% icon 'check-circle' size=22 %}</span><h3>Honest verdicts</h3><p>If a registry is unreachable, we say so — and we don't charge for an answer we can't give.</p></div>
-      <div class="bento-tile reveal" data-delay="1"><span class="card__icon" style="margin-bottom:var(--s-3)">{% icon 'lock' size=22 %}</span><h3>Your IMEI isn't ours</h3><p>We run the check and move on. No profiles, no resale of your lookups.</p></div>
     </div>
   </div>
 </section>
@@ -156,34 +119,20 @@
 <!-- ============ TESTIMONIALS ============ -->
 <section class="section">
   <div class="container">
-    <div class="section-head reveal"><span class="section-label">{% icon 'star' size=16 %} Real buyers</span><h2>People who didn't get burned.</h2></div>
-
-    <div class="tmon-feature reveal">
-      <div class="tmon-feature__grid">
-        <div class="tmon-feature__photo"><img src="{% static 'img/people/face-aaman.jpg' %}" alt="Marcus, a happy Veridex customer"></div>
-        <div class="tmon-feature__body">
-          <div class="stars" style="margin-bottom:var(--s-4)">★★★★★</div>
-          <blockquote>"I was about to hand over $480 for an iPhone. Veridex flagged it as <span class="hl">reported stolen</span> in 40 seconds. Best dollar I've ever spent."</blockquote>
-          <cite>Marcus T. — bought a used iPhone 14, Atlanta</cite>
-        </div>
-      </div>
-    </div>
+    <div class="section-head reveal"><span class="section-label">{% icon 'star' size=16 %} In their words</span><h2>What people use it for.</h2></div>
 
     <div class="tmon-grid">
       <div class="tmon reveal" data-delay="1">
-        <div class="stars">★★★★★</div>
-        <p>"Seller swore it was unlocked. Veridex showed it was <strong>carrier-locked</strong>. Saved me a useless purchase."</p>
-        <div class="tmon__head"><img class="avatar" src="{% static 'img/people/face-blackwoman.jpg' %}" alt=""><div><strong>Aïcha N.</strong><span>Reseller, Paris</span></div></div>
+        <p>"I was about to pay for a phone that turned out to be reported stolen. Checking first saved me the money and the headache."</p>
+        <div class="tmon__head"><div><strong>A used-phone buyer</strong></div></div>
       </div>
       <div class="tmon reveal" data-delay="2">
-        <div class="stars">★★★★★</div>
-        <p>"I check every phone before I restock my shop now. The iCloud-lock check alone pays for itself."</p>
-        <div class="tmon__head"><img class="avatar" src="{% static 'img/people/face-asianman.jpg' %}" alt=""><div><strong>Kenji M.</strong><span>Repair shop owner, Osaka</span></div></div>
+        <p>"The seller said it was unlocked. The check showed it was still carrier-locked, so I walked away from a purchase I'd have regretted."</p>
+        <div class="tmon__head"><div><strong>A reseller</strong></div></div>
       </div>
       <div class="tmon reveal" data-delay="3">
-        <div class="stars">★★★★★</div>
-        <p>"Plain English verdict, no confusing codes. My dad could use it. Clean phone, bought with confidence."</p>
-        <div class="tmon__head"><img class="avatar" src="{% static 'img/people/face-glasses.jpg' %}" alt=""><div><strong>Omar R.</strong><span>Student, Dubai</span></div></div>
+        <p>"I run a check on every phone before it goes back on the shelf. Plain-language answers, nothing I have to decode."</p>
+        <div class="tmon__head"><div><strong>A repair-shop owner</strong></div></div>
       </div>
     </div>
   </div>
@@ -192,12 +141,12 @@
 <!-- ============ FAQ ============ -->
 <section class="section bg-cream" id="faq">
   <div class="container" style="max-width:760px">
-    <div class="section-head reveal"><span class="section-label">{% icon 'info' size=16 %} FAQ</span><h2>Straight answers.</h2></div>
+    <div class="section-head reveal"><span class="section-label">{% icon 'info' size=16 %} FAQ</span><h2>A few straight answers.</h2></div>
     <div class="grid" style="gap:var(--s-3)">
       <details class="card reveal"><summary style="font-weight:600;cursor:pointer;list-style:none;color:var(--ink)">Where do I find the IMEI?</summary><p style="margin-top:var(--s-3)">Dial <span class="mono">*#06#</span> on any phone, or look in Settings → General → About. It's also printed on the SIM tray and the original box.</p></details>
-      <details class="card reveal"><summary style="font-weight:600;cursor:pointer;list-style:none;color:var(--ink)">How fast are results?</summary><p style="margin-top:var(--s-3)">Most checks land in under a minute. A few registry lookups take a couple of minutes — we show a live status the whole time.</p></details>
-      <details class="card reveal"><summary style="font-weight:600;cursor:pointer;list-style:none;color:var(--ink)">What if the phone is flagged?</summary><p style="margin-top:var(--s-3)">You walk away before you pay. That's the whole point — a {{ BRAND.currency_symbol }}1.49 check beats a stolen phone you can never activate.</p></details>
-      <details class="card reveal"><summary style="font-weight:600;cursor:pointer;list-style:none;color:var(--ink)">Do you work for every brand?</summary><p style="margin-top:var(--s-3)">Yes — Apple, Samsung, Google, Xiaomi and more. The IMEI standard is universal; our sources cover the major carriers and registries worldwide.</p></details>
+      <details class="card reveal"><summary style="font-weight:600;cursor:pointer;list-style:none;color:var(--ink)">How fast are results?</summary><p style="margin-top:var(--s-3)">Most checks come back in under a minute. A few registry lookups take a little longer — we show a live status the whole time.</p></details>
+      <details class="card reveal"><summary style="font-weight:600;cursor:pointer;list-style:none;color:var(--ink)">What if the phone is flagged?</summary><p style="margin-top:var(--s-3)">Then you know before you pay, and you can walk away. That's the whole point — a small check is easier to absorb than a phone you can never activate.</p></details>
+      <details class="card reveal"><summary style="font-weight:600;cursor:pointer;list-style:none;color:var(--ink)">Do you work for every brand?</summary><p style="margin-top:var(--s-3)">The IMEI standard is universal, so we cover Apple, Samsung, Google, Xiaomi and more, drawing on the major carriers and registries.</p></details>
     </div>
   </div>
 </section>
@@ -206,9 +155,9 @@
 <section class="section">
   <div class="container">
     <div class="cta-band reveal">
-      <h2>Don't guess. Verify.</h2>
-      <p>Sixty seconds now saves you from a phone that never turns on.</p>
-      <a href="{% url 'place_order' %}" class="btn btn--primary btn--lg">{% icon 'scan' size=20 %} Verify an IMEI</a>
+      <h2>Check before you pay.</h2>
+      <p>A quiet minute now is easier than sorting out a phone that never turns on.</p>
+      <a href="{% url 'place_order' %}" class="btn btn--primary btn--lg">Check an IMEI</a>
     </div>
   </div>
 </section>

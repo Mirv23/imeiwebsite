@@ -7,12 +7,23 @@
   /* ---- Mobile drawer ---- */
   var drawer = document.querySelector("[data-drawer]");
   if (drawer) {
-    function setDrawer(open) {
+    var drawerOpener = null;  // the burger that opened it, so we can restore focus
+    var closeBtn = drawer.querySelector("[data-drawer-close]");
+
+    function setDrawer(open, opener) {
       drawer.setAttribute("data-open", open ? "true" : "false");
+      drawer.setAttribute("aria-hidden", open ? "false" : "true");
       document.body.style.overflow = open ? "hidden" : "";
+      if (open) {
+        drawerOpener = opener || document.activeElement;
+        if (closeBtn) closeBtn.focus();
+      } else if (drawerOpener && typeof drawerOpener.focus === "function") {
+        drawerOpener.focus();
+        drawerOpener = null;
+      }
     }
     document.querySelectorAll("[data-drawer-open]").forEach(function (b) {
-      b.addEventListener("click", function () { setDrawer(true); });
+      b.addEventListener("click", function () { setDrawer(true, b); });
     });
     document.querySelectorAll("[data-drawer-close]").forEach(function (b) {
       b.addEventListener("click", function () { setDrawer(false); });
@@ -21,7 +32,21 @@
       if (e.target === drawer) setDrawer(false);
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") setDrawer(false);
+      var isOpen = drawer.getAttribute("data-open") === "true";
+      if (e.key === "Escape" && isOpen) { setDrawer(false); return; }
+      /* Simple focus trap: keep Tab within the drawer while it's open. */
+      if (e.key === "Tab" && isOpen) {
+        var focusables = drawer.querySelectorAll(
+          'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusables.length) return;
+        var first = focusables[0], last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
+      }
     });
   }
 

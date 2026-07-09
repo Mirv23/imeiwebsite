@@ -51,16 +51,16 @@ def run_lookup(order: Order) -> CheckResult:
     bucket = seed % 100
     if bucket < 70:
         verdict = CheckResult.Verdict.CLEAN
-        headline = "Clean. No blacklist, no lock."
-        summary = "This device is safe to buy or activate on any carrier."
+        headline = "Clean — no blacklist or lock found."
+        summary = "This device looks safe to buy or activate."
     elif bucket < 88:
         verdict = CheckResult.Verdict.LOCKED
-        headline = "Locked. Activation Lock is on."
-        summary = "Find My / iCloud is active. Ask the seller to sign out first."
+        headline = "Locked — Activation Lock is on."
+        summary = "Find My / iCloud is still active. It's worth asking the seller to sign out first."
     else:
         verdict = CheckResult.Verdict.FLAGGED
-        headline = "Flagged. Reported lost or stolen."
-        summary = "This device is on a blacklist. We strongly advise against buying it."
+        headline = "Flagged — reported lost or stolen."
+        summary = "This device shows up on a blacklist. We'd hold off before paying for it."
 
     fields = {
         "Brand": brand,
@@ -79,7 +79,12 @@ def run_lookup(order: Order) -> CheckResult:
             "headline": headline,
             "summary": summary,
             "fields": fields,
-            "raw_payload": {"source": "mock-engine", "version": 1},
+            "raw_payload": {
+                "source": "mock-engine",
+                "version": 1,
+                "demo": True,
+                "note": "Demonstration engine — results are simulated, not a live registry lookup.",
+            },
         },
     )
     order.mark_completed()

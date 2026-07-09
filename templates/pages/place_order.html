@@ -8,7 +8,7 @@
     <div class="section-head" style="margin-bottom:var(--s-6)">
       <span class="eyebrow">{% icon 'scan' size=16 %} Verify</span>
       <h2>Run the check.</h2>
-      <p>Pick a check, paste the IMEI, get a plain-language verdict.</p>
+      <p>Pick a check, paste in the IMEI, and read a plain-language verdict. It only takes a moment.</p>
     </div>
 
     {% for m in messages %}<div class="toast">{{ m }}</div>{% endfor %}
@@ -16,7 +16,7 @@
     <!-- Checking overlay -->
     <div class="checking card">
       <div class="checking__ring"></div>
-      <strong style="font-family:var(--font-display)">Querying 180+ registries…</strong>
+      <strong style="font-family:var(--font-display)">Checking the registries…</strong>
       <p class="mono" style="font-size:var(--fs-14)">This usually takes under a minute.</p>
     </div>
 
@@ -67,7 +67,7 @@
         </div>
 
         <button type="submit" class="btn btn--primary btn--lg btn--block">{% icon 'shield-check' size=20 %} Run the check</button>
-        <p class="field-help" style="text-align:center;margin-top:var(--s-3)">No account needed. You only pay when a verdict is delivered.</p>
+        <p class="field-help" style="text-align:center;margin-top:var(--s-3)">No account needed — just the IMEI.</p>
       </div>
     </form>
   </div>

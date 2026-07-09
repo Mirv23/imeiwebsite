@@ -6,7 +6,7 @@ def brand(request):
     return {
         "BRAND": {
             "name": "Veridex",
-            "tagline": "Every IMEI, verified in seconds.",
+            "tagline": "Check a used phone before you buy it.",
             "support_email": settings.VERIDEX["support_email"],
             "currency_symbol": settings.VERIDEX["currency_symbol"],
         }
